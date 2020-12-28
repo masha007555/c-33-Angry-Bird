@@ -22,7 +22,7 @@ function setup(){
     world = engine.world;
 
 
-    ground = new Ground(600,height,1200,20);
+    ground = new Ground(600,height,2000,20);
     platform = new Ground(150, 305, 300, 170);
 
     box1 = new Box(700,320,70,70);
@@ -47,8 +47,14 @@ function setup(){
 }
 
 function draw(){
-    if(backgroundImg)
+    if(backgroundImg) {
         background(backgroundImg);
+
+    } else {
+
+        background("yellow");
+    }
+        
     
         noStroke();
         textSize(35)
@@ -78,6 +84,13 @@ function draw(){
     platform.display();
     //log6.display();
     slingshot.display();    
+
+    // if (this.body.position.x>1200){
+    //     Matter.Body.setVelocity(bird.body,{x:0,y:0});
+    //     Matter.Body.setPosition(bird.body,{x:1200});
+    //   }
+
+    console.log(bird.body.speed);
 }
 
 function mouseDragged(){
@@ -93,8 +106,10 @@ function mouseReleased(){
 }
 
 function keyPressed(){
-    if(keyCode === 32){
-       slingshot.attach(bird.body);
+    if(keyCode === 32 && bird.body.speed<1){
+        Matter.Body.setPosition(bird.body,{x:200,y:50});
+        slingshot.attach(bird.body);
+       bird.trajectory = [];
     }
 }
 
